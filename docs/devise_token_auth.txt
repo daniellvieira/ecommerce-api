@@ -1,0 +1,144 @@
+https://obootcamponebitcode.club.hotmart.com/lesson/LO0V0g2YeG/instalando-o-devise-token-auth
+
+Instalando Devise Token Auth
+1. Introdução
+Nesta aula vamos instalar o Devise Token Auth (link da gem) e configurar o model User.
+
+O Devise Token Auth utiliza uma técnica de login que recebe usuário e senha para retornar um token para o usuário. A cada request que o usuário envia, ele vai receberá a resposta e um novo token para utilizar no próximo request.
+
+Então, caso o usuário tente enviar uma request com um token "velho", ele será impedido.
+
+2. Conteúdo
+1- Vamos começar limpando o Gemfile, removendo os comentários que tem no arquivo e dividindo por responsabilidade. Nosso Gemfile ficará assim:
+
+[Deixe Gemfile com o seguinte conteúdo]
+
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby '2.7.1'
+
+gem 'rails', '~> 6.0.3', '>= 6.0.3.3'
+
+# Basic
+gem 'bootsnap', '>= 1.4.2', require: false
+gem 'pg', '>= 0.18', '< 2.0'
+gem 'puma', '~> 4.1'
+
+group :development, :test do
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+end
+
+group :development do
+  gem 'listen', '~> 3.2'
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+Embora este assunto já tenha sido levantado, na comunidade ainda não existe uma convenção sobre como o Gemfile deve ser organizado. Nós escolhemos este estilo de separar por "função" da Gem no projeto e alfabeticamente por cada funao, mas por hora é uma escolha que se deve fazer com o time.
+
+2- Agoras vamos adicionar no Gemfile o Devise Token Auth que utilizaremos para autenticação por Token
+
+[Adicione no Gemfile]
+
+...
+gem 'puma', '~> 4.1'
+
+# Auth
+gem 'devise_token_auth', '~> 1.1.4'
+
+...
+3- Com ele adicionado, podemos instalar
+
+[Execute no terminal] VAI DAR ERRO E É ESPERADO!
+
+bundle install
+Perceba que tivemos um problema com a instalação por causa da versão do Sprockets. Então vamos executar um update para que o Bundle possa adaptar as versões das dependências sem afetar o funcionamento.
+
+[Execute no terminal]
+
+bundle update
+4- Agora nosso próximo passo é inicializar tanto o Devise quanto o Devise Token Auth. Perceba que não foi necessário adicionar o Devise no Gemfile porque ele é uma dependência do Devise Token Auth.
+
+Então, primeiro vamos gerar o arquivo de inicialização do Devise
+
+[Execute no terminal]
+
+rails g devise:install
+Para o generator do Devise Token Auth nós precisaremos passar o model que queremos gerar e qual o escopo das rotas que serão utilizadas. Vamos gerar o model User no escopo de rotas auth/v1/user.
+
+[Execute no terminal]
+
+rails g devise_token_auth:install User auth/v1/user
+Alguns arquivos foram gerados e outros alterados e vamos vê-los de um a um.
+
+5- O primeiro deles é o arquivo de configuração do Devise Token Auth.
+
+Vamos começar habilitando o Token Refresh, para que o token seja modificado a cada request.
+
+[Descomente a linha 08 do arquivo config/initializers/devise_token_auth.rb]
+
+config.change_headers_on_each_request = true
+Após isso, vamos configurar o tempo de expiração do token para 1 semana.
+
+[Descomente a linha 13 do arquivo config/initializers/devise_token_auth e altere para]
+
+config.token_lifespan = 1.week
+Temos uma última configuração para habilitar que é o tempo que o mesmo token pode ser utilizado para o caso de requisições em massa.
+
+[Descomente a linha 27 do arquivo config/initializers/devise_token_auth.rb]
+
+config.batch_request_buffer_throttle = 5.seconds
+6- O Devise Token Auth também gerou pra gente o model User com o seguinte conteúdo
+
+# frozen_string_literal: true
+
+class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+  include DeviseTokenAuth::Concerns::User
+end
+É bem importante ressaltar que este include deve permanecer após as configurações do Devise porque ele possui uma configuração padrão e se colocamos antes, esta configuração padrão será utilizada em vez da que definirmos.
+
+O que podemos fazer é apagar os comentários
+
+[Remova os comentários das linhas 04 e 05 do arquivo app/models/user.rb]
+
+# Include default devise modules. Others available are:
+# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+7- Junto com o model, também foi criada uma migration para o usuário. Nela existem campos que não vamos utilizar, como o nickname e o image
+
+[Remova as linhas 33 e 34 da migration db/migration/<timestamp>_devise_token_auth_create_users.rb]
+
+t.string :nickname
+t.string :image
+E também nesta mesma migration vamos precisar adicionar o campo de profile com valor padrão 1. Na parte de models nós vamos entender o porque desse valor padrão.
+
+[Adicione em db/migration/<timestamp>_devise_token_auth_create_users.rb]
+
+...
+t.string :email
+t.integer :profile, default: 1
+
+...
+8- Agora podemos executar as migrations para criarmos nossa tabela de usuários
+
+[Execute no terminal]
+
+rails db:migrate
+9- Para finalizar a aula, vamos criar um usuário que utilizaremos como teste nas proximas aulas.
+
+Primeiro, vamos abrir o console do Rails
+
+[Execute no terminal]
+
+rails c
+Agora vamos criar o usuário pelo console
+
+[Execute no console do Rails]
+
+User.create(name: "Test", email: "test@test.com", password: "123456", password_confirmation: "123456", profile: 0)
+Usuário criado, vamos para a próxima aula = )
