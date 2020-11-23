@@ -6,10 +6,13 @@ RSpec.describe Product, type: :model do
   it { expect(subject).to belong_to :productable }
   it { expect(subject).to have_many(:product_categories).dependent(:destroy) }
   it { expect(subject).to have_many(:categories).through(:product_categories) }
+  # Active Storage
+  it { expect(subject).to validate_presence_of(:image) }
   # Validations
   it { expect(subject).to validate_presence_of(:name) }
   it { expect(subject).to validate_uniqueness_of(:name).case_insensitive }
   it { expect(subject).to validate_presence_of(:description) }
   it { expect(subject).to validate_presence_of(:price) }
   it { expect(subject).to validate_numericality_of(:price).is_greater_than(0) }
+
 end
