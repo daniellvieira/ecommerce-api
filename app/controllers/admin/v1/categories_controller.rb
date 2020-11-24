@@ -11,11 +11,17 @@ module Admin::V1
       save_category!
     end
 
+    def update
+      @category = Category.find(params[:id])
+      @category.attributes = category_params
+      save_category!
+    end
+
     private
 
     def category_params
       return {} unless params.has_key?(:category)
-      params.require(:category).permit(:id, :name)
+      params.require(:category).permit(:name)
     end
 
     def save_category!
