@@ -1,6 +1,6 @@
 module Admin::V1
   class CategoriesController < ApiController
-    before_action :load_category, only: [:update, :destroy]
+    before_action :load_category, only: %i[update destroy]
 
     def index
       @categories = Category.all
@@ -31,7 +31,7 @@ module Admin::V1
 
     def category_params
       return {} unless params.has_key?(:category)
-      params.require(:category).permit(:id, :name)
+      params.require(:category).permit(:name)
     end
 
     def save_category!
