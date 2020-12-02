@@ -1,4 +1,7 @@
 class Product < ApplicationRecord
+  # Concerns
+  include NameSearchable
+  include Paginatable
   # Relationships
   belongs_to :productable, polymorphic: true, required: true
   has_many :product_categories, dependent: :destroy

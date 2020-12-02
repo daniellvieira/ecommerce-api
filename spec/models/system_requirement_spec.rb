@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe SystemRequirement, type: :model do
+  # Concerns
+  it_behaves_like 'name searchable concern', :system_requirement
+  it_behaves_like 'paginatable concern', :system_requirement
   # Relationships
   it { expect(subject).to have_many(:games).dependent(:restrict_with_error) }
   # Validations

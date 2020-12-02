@@ -1,4 +1,7 @@
 class SystemRequirement < ApplicationRecord
+  # Concerns
+  include NameSearchable
+  include Paginatable
   # Relationships
   has_many :games, dependent: :restrict_with_error
   # Validations

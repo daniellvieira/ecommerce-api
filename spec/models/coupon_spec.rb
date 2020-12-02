@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Coupon, type: :model do
+  # Concerns
+  it_behaves_like 'paginatable concern', :coupon
   # Enums
   it { expect(subject).to define_enum_for(:status).with_values({ active: 1, inactive: 2 }) }
   # Validations

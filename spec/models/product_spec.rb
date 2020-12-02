@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :model do
   subject { build(:product) }
+  # Concerns
+  it_behaves_like 'name searchable concern', :product
+  it_behaves_like 'paginatable concern', :product
   # Relationships
   it { expect(subject).to belong_to :productable }
   it { expect(subject).to have_many(:product_categories).dependent(:destroy) }

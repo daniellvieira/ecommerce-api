@@ -1,4 +1,6 @@
 class Coupon < ApplicationRecord
+  # Concerns
+  include Paginatable
   # Enums
   enum status: { active: 1,  inactive: 2 }
   # Validations

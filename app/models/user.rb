@@ -7,9 +7,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  # Concerns
+  include NameSearchable
+  include Paginatable
   # Enums
   enum profile: { admin: 0, client: 1 }
-
   # Validations
   validates :name, presence: true
   validates :profile, presence: true
