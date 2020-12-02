@@ -1,9 +1,10 @@
 module Admin::V1
   class SystemRequirementsController < ApiController
-    before_action :load_system_requirement, only: %i[update destroy]
+    before_action :load_system_requirement, only: [:update, :destroy]
 
     def index
-      @system_requirements = SystemRequirement.all
+      permitted = params.permit({ search: :name }, { order: {} }, :page, :length)
+      @system_requirements = Admin::ModelLoadingService.new(SystemRequirement.all, permitted).call
     end
 
     def create
@@ -32,7 +33,7 @@ module Admin::V1
     def system_requirement_params
       return {} unless params.has_key?(:system_requirement)
       params.require(:system_requirement).permit(
-        :name, :operational_system, :storage, :processor, :memory, :video_board
+        :id, :name, :operational_system, :storage, :processor, :memory, :video_board
       )
     end
 

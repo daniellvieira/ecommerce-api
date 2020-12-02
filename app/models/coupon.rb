@@ -1,5 +1,6 @@
 class Coupon < ApplicationRecord
   # Concerns
+  include NameSearchable
   include Paginatable
   # Enums
   enum status: { active: 1,  inactive: 2 }
