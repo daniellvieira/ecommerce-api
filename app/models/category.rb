@@ -1,6 +1,7 @@
 class Category < ApplicationRecord
   # Concerns
   include NameSearchable
+  include Paginatable
   # Relationships
   has_many :product_categories, dependent: :destroy
   has_many :products, through: :product_categories
