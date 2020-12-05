@@ -15,6 +15,13 @@ RSpec.describe 'Admin::V1::SystemRequeriments without authentication', type: :re
     include_examples 'unauthenticated access'
   end
 
+  context 'GET /system_requirements/:id' do
+    let!(:system_requirement) { create(:system_requirement) }
+    let(:url) { "/admin/v1/system_requirements/#{system_requirement.id}" }
+    before(:each) { get url }
+    include_examples 'unauthenticated access'
+  end
+
   context 'PATCH /system_requirements/:id' do
     let(:system_requirement) { create(:system_requirement) }
     let(:url) { "/admin/v1/system_requirements/#{system_requirement.id}" }

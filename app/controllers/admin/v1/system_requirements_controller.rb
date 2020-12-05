@@ -1,11 +1,13 @@
 module Admin::V1
   class SystemRequirementsController < ApiController
-    before_action :load_system_requirement, only: [:update, :destroy]
+    before_action :load_system_requirement, only: %i[update destroy show]
 
     def index
       permitted = params.permit({ search: :name }, { order: {} }, :page, :length)
       @system_requirements = Admin::ModelLoadingService.new(SystemRequirement.all, permitted).call
     end
+
+    def show; end
 
     def create
       @system_requirement = SystemRequirement.new

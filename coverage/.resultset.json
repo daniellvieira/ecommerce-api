@@ -96,7 +96,7 @@
         "lines": [
           1,
           1,
-          280,
+          285,
           6,
           6,
           null,
@@ -211,6 +211,8 @@
           null,
           null,
           1,
+          null,
+          1,
           6,
           6,
           6,
@@ -230,7 +232,7 @@
           1,
           null,
           1,
-          11,
+          13,
           null,
           null,
           1,
@@ -266,13 +268,13 @@
           1,
           null,
           1,
-          24,
+          30,
           null,
           null,
           1,
           null,
           1,
-          87,
+          99,
           null,
           null,
           null
@@ -299,7 +301,7 @@
           1,
           null,
           1,
-          42,
+          48,
           null,
           null,
           null,
@@ -317,6 +319,8 @@
           2,
           2,
           null,
+          null,
+          1,
           null,
           1,
           6,
@@ -338,7 +342,7 @@
           1,
           null,
           1,
-          9,
+          11,
           null,
           null,
           1,
@@ -381,6 +385,8 @@
           null,
           null,
           1,
+          null,
+          1,
           6,
           6,
           6,
@@ -400,7 +406,7 @@
           1,
           null,
           1,
-          9,
+          11,
           null,
           null,
           1,
@@ -420,21 +426,14 @@
           null
         ]
       },
-      "/home/daniel/workspace/ecommerce-api/app/channels/application_cable/channel.rb": {
+      "/home/daniel/workspace/ecommerce-api/app/jobs/application_job.rb": {
         "lines": [
           0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/home/daniel/workspace/ecommerce-api/app/channels/application_cable/connection.rb": {
-        "lines": [
-          0,
-          0,
-          0,
+          null,
+          null,
+          null,
+          null,
+          null,
           0
         ],
         "branches": {
@@ -450,13 +449,8 @@
         "branches": {
         }
       },
-      "/home/daniel/workspace/ecommerce-api/app/models/concerns/name_searchable.rb": {
+      "/home/daniel/workspace/ecommerce-api/app/channels/application_cable/channel.rb": {
         "lines": [
-          0,
-          0,
-          null,
-          0,
-          0,
           0,
           0,
           0,
@@ -465,14 +459,11 @@
         "branches": {
         }
       },
-      "/home/daniel/workspace/ecommerce-api/app/jobs/application_job.rb": {
+      "/home/daniel/workspace/ecommerce-api/app/channels/application_cable/connection.rb": {
         "lines": [
           0,
-          null,
-          null,
-          null,
-          null,
-          null,
+          0,
+          0,
           0
         ],
         "branches": {
@@ -541,8 +532,23 @@
         ],
         "branches": {
         }
+      },
+      "/home/daniel/workspace/ecommerce-api/app/models/concerns/name_searchable.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
       }
     },
-    "timestamp": 1606939910
+    "timestamp": 1607191827
   }
 }
