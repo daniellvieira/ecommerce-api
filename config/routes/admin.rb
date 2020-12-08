@@ -4,5 +4,6 @@ namespace :admin do
     resources :categories
     resources :system_requirements
     resources :coupons
+    resources :products
   end
 end
